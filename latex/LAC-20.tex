@@ -1,4 +1,4 @@
-% Template LaTeX file for LAC-19 papers
+% Template LaTeX file for LAC-20 papers
 %
 % To generate the correct references using BibTeX, run
 %     latex, bibtex, latex, latex
@@ -17,6 +17,7 @@
 % - from DAFx-15 to DAFx-16 by Pavel Rajmic 2015
 % - from DAFx-16 to IFC-18 by Romain Michon 2018
 % - from IFC-18 to LAC-19 by Romain Michon 2019
+% - from LAC-19 to LAC-20 by Jean-Michaël Celerier 2020
 %
 % Template with hyper-references (links) active after conversion to pdf
 % (with the distiller) or if compiled with pdflatex.
@@ -24,14 +25,14 @@
 % 20060205: added package 'hypcap' to correct hyperlinks to figures and tables
 %                      use of \papertitle and \paperauthorA, etc for same title in PDF and Metadata
 %
-% 1) Please compile using latex or pdflatex.
+% 1) Please compile using lualatex, latex or pdflatex.
 % 2) If using pdflatex, you need your figures in a file format other than eps! e.g. png or jpg is working
-% 3) Please use "paperftitle" and "pdfauthor" definitions below
+% 3) Please use "papertitle" and "pdfauthor" definitions below
 
 %------------------------------------------------------------------------------------------
 %  !  !  !  !  !  !  !  !  !  !  !  ! user defined variables  !  !  !  !  !  !  !  !  !  !  !  !  !  !
 % Please use these commands to define title and author(s) of the paper:
-\def\papertitle{Templates for LAC-19, Stanford, USA}
+\def\papertitle{Templates for LAC-20, Bordeaux, France}
 \def\paperauthorA{Author One}
 \def\paperauthorB{Author Two}
 \def\paperauthorC{Author Three}
@@ -40,13 +41,12 @@
 % Authors' affiliations have to be set below
 
 %------------------------------------------------------------------------------------------
-\documentclass[twoside,letterpaper]{article}
-\usepackage{LAC-19}
+\documentclass[twoside,a4paper]{article}
+\usepackage{LAC-20}
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{euscript}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{ifpdf}
+\usepackage{ifluatex}
 
 \usepackage{color}
 \usepackage{listings}
@@ -62,7 +62,6 @@
 \usepackage[english]{babel}
 \usepackage{caption}
 \usepackage{subfig, color}
-
 \setcounter{page}{1}
 \ninept
 
@@ -71,15 +70,25 @@
 % Delete if you cannot get PS fonts working on your system.
 
 % pdf-tex settings: detect automatically if run by latex or pdflatex
-\newif\ifpdf
-\ifx\pdfoutput\relax
+\ifluatex
+  \usepackage[
+    pdftitle={\papertitle},
+    pdfauthor={\paperauthorA, \paperauthorB, \paperauthorC, \paperauthorD},
+    colorlinks=false, % links are activated as colror boxes instead of color text
+    bookmarksnumbered, % use section numbers with bookmarks
+    pdfstartview=XYZ % start with zoom=100% instead of full screen; especially useful if working with a big screen :-)
+  ]{hyperref}
+  
+  \edef\pdfcompresslevel{\pdfvariable compresslevel}
+  \pdfcompresslevel=9
+  \usepackage{graphicx}
+  
+  \usepackage[figure,table]{hypcap}
+  \usepackage{fontspec}
 \else
-   \ifcase\pdfoutput
-      \pdffalse
-   \else
-      \pdftrue
-\fi
 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \ifpdf % compiling with pdflatex
   \usepackage[pdftex,
     pdftitle={\papertitle},
@@ -91,6 +100,7 @@
   \pdfcompresslevel=9
   \usepackage[pdftex]{graphicx}
   \usepackage[figure,table]{hypcap}
+  \DeclareGraphicsExtensions{.png,.jpg,.pdf}
 \else % compiling with latex
   \usepackage[dvips]{epsfig,graphicx}
   \usepackage[dvips,
@@ -100,6 +110,8 @@
   ]{hyperref}
   % hyperrefs are active in the pdf file after conversion
   \usepackage[figure,table]{hypcap}
+  \DeclareGraphicsExtensions{.eps}
+\fi
 \fi
 
 \title{\papertitle}
@@ -162,24 +174,17 @@ Saint-Etienne, France \\
 %-------------------------------------FOUR-AUTHOR HEADER ENDS------------------------------------------------------
 
 \begin{document}
-% more pdf-tex settings:
-\ifpdf % used graphic file format for pdflatex
-  \DeclareGraphicsExtensions{.png,.jpg,.pdf}
-\else  % used graphic file format for latex
-  \DeclareGraphicsExtensions{.eps}
-\fi
 
 \maketitle
 
 \begin{abstract}
-This is the template file for the proceedings of the 17$^{\text{th}}$ 
-Linux Audio Conference (LAC-19).
-This template has been derived from DAFx-16 and IFC-18 templates and aims at 
+This is the template file for the proceedings of the 18$^{\text{th}}$ 
+Linux Audio Conference (LAC-20).
+This template has been derived from DAFx-16, IFC-18, LAC-19 templates and aims at 
 producing conference proceedings in electronic form.
 The format is essentially the one used for ICASSP conferences. Please use
 either this \LaTeX{} or the accompanying LibreOffice formats when preparing your
-submission. The templates are available in electronic form.\footnote{
-\href{https://lac.linuxaudio.org/2019/}{https://lac.linuxaudio.org/2019/}}
+submission. 
 \end{abstract}
 
 \section{Introduction}
@@ -304,7 +309,7 @@ Many thanks to the great number of anonymous reviewers!
 %\newpage
 \nocite{*}
 \bibliographystyle{IEEEbib}
-\bibliography{LAC-19} % requires file ifc-18.bib
+\bibliography{LAC-20} % requires file lac-20.bib
 
 \section{Appendix: Margin Check}
 
