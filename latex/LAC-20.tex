@@ -47,6 +47,7 @@
 \usepackage{euscript}
 \usepackage{ifpdf}
 \usepackage{ifluatex}
+\usepackage{ifxetex}
 
 \usepackage{color}
 \usepackage{listings}
@@ -66,9 +67,6 @@
 \ninept
 
 \usepackage{times}
-% Saves a lot of ouptut space in PDF... after conversion with the distiller
-% Delete if you cannot get PS fonts working on your system.
-
 % pdf-tex settings: detect automatically if run by latex or pdflatex
 \ifluatex
   \usepackage[
@@ -86,32 +84,47 @@
   \usepackage[figure,table]{hypcap}
   \usepackage{fontspec}
 \else
-
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\ifpdf % compiling with pdflatex
-  \usepackage[pdftex,
-    pdftitle={\papertitle},
-    pdfauthor={\paperauthorA, \paperauthorB, \paperauthorC, \paperauthorD},
-    colorlinks=false, % links are activated as colror boxes instead of color text
-    bookmarksnumbered, % use section numbers with bookmarks
-    pdfstartview=XYZ % start with zoom=100% instead of full screen; especially useful if working with a big screen :-)
-  ]{hyperref}
-  \pdfcompresslevel=9
-  \usepackage[pdftex]{graphicx}
-  \usepackage[figure,table]{hypcap}
-  \DeclareGraphicsExtensions{.png,.jpg,.pdf}
-\else % compiling with latex
-  \usepackage[dvips]{epsfig,graphicx}
-  \usepackage[dvips,
-    colorlinks=false, % no color links
-    bookmarksnumbered, % use section numbers with bookmarks
-    pdfstartview=XYZ % start with zoom=100% instead of full screen
-  ]{hyperref}
-  % hyperrefs are active in the pdf file after conversion
-  \usepackage[figure,table]{hypcap}
-  \DeclareGraphicsExtensions{.eps}
-\fi
+  \ifxetex
+    \usepackage[
+      pdftitle={\papertitle},
+      pdfauthor={\paperauthorA, \paperauthorB, \paperauthorC, \paperauthorD},
+      colorlinks=false, % links are activated as colror boxes instead of color text
+      bookmarksnumbered, % use section numbers with bookmarks
+      pdfstartview=XYZ % start with zoom=100% instead of full screen; especially useful if working with a big screen :-)
+    ]{hyperref}
+    
+    \pdfcompresslevel=9
+    \usepackage{graphicx}
+    
+    \usepackage[figure,table]{hypcap}
+    \usepackage{fontspec}
+  \else
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+    \ifpdf % compiling with pdflatex
+      \usepackage[pdftex,
+        pdftitle={\papertitle},
+        pdfauthor={\paperauthorA, \paperauthorB, \paperauthorC, \paperauthorD},
+        colorlinks=false, % links are activated as colror boxes instead of color text
+        bookmarksnumbered, % use section numbers with bookmarks
+        pdfstartview=XYZ % start with zoom=100% instead of full screen; especially useful if working with a big screen :-)
+      ]{hyperref}
+      \pdfcompresslevel=9
+      \usepackage[pdftex]{graphicx}
+      \usepackage[figure,table]{hypcap}
+      \DeclareGraphicsExtensions{.png,.jpg,.pdf}
+    \else % compiling with latex
+      \usepackage[dvips]{epsfig,graphicx}
+      \usepackage[dvips,
+        colorlinks=false, % no color links
+        bookmarksnumbered, % use section numbers with bookmarks
+        pdfstartview=XYZ % start with zoom=100% instead of full screen
+      ]{hyperref}
+      % hyperrefs are active in the pdf file after conversion
+      \usepackage[figure,table]{hypcap}
+      \DeclareGraphicsExtensions{.eps}
+    \fi
+  \fi
 \fi
 
 \title{\papertitle}
